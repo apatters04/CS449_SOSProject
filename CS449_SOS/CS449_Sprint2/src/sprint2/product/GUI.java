@@ -3,14 +3,16 @@ package sprint2.product;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
+import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 
 @SuppressWarnings("serial")
-public class GUI extends JFrame {
+public class GUI extends JFrame implements ActionListener{
 
 	public static final int CELL_SIZE = 100;
 	public static final int GRID_WIDTH = 8;
@@ -22,10 +24,27 @@ public class GUI extends JFrame {
 	
 	private int CANVAS_WIDTH;
 	private int CANVAS_HEIGHT;
+	private int numCells = 3; //grid size is automatically set to 3, can be changed by user input
 	
 	private GameBoardCanvas gameBoardCanvas;
 	
 	private Board board;
+	
+	JLabel heading = new JLabel("Welcome to SOS");
+	JLabel sizeLabel = new JLabel("Grid Size");
+	
+	JTextField inSize = new JTextField(7);
+	
+	int userSize;
+	
+	public void actionPerformed(ActionEvent evt) {
+		String userIn = inSize.getText();
+		
+		userSize = Integer.parseInt(userIn);
+		board.setgridSize(userSize);
+		
+		repaint();
+	}
 	
 	public GUI(Board board) {
 		this.board = board;
@@ -41,9 +60,12 @@ public class GUI extends JFrame {
 	}
 	
 	private void setContentPane() {
+		
+		
+		
 		gameBoardCanvas = new GameBoardCanvas();
-		CANVAS_WIDTH = CELL_SIZE * board.getgridSize();
-		CANVAS_HEIGHT = CELL_SIZE * board.getgridSize();
+		CANVAS_WIDTH = CELL_SIZE * numCells;
+		CANVAS_HEIGHT = CELL_SIZE * numCells;
 		gameBoardCanvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
 		
 		Container contentPane = getContentPane();
@@ -74,11 +96,11 @@ public class GUI extends JFrame {
 		
 		private void drawGridLines(Graphics g) {
 			g.setColor(Color.LIGHT_GRAY);
-			for (int row = 1; row <= board.getgridSize(); row++) {
+			for (int row = 1; row < numCells; row++) {
 				g.fillRoundRect(0, CELL_SIZE * row - GRID_WIDTH_HALF, CANVAS_WIDTH-1, GRID_WIDTH, GRID_WIDTH, GRID_WIDTH);
 			}
 			
-			for (int col = 1; col <= board.getgridSize(); col++) {
+			for (int col = 1; col < numCells; col++) {
 				g.fillRoundRect(CELL_SIZE * col - GRID_WIDTH_HALF, 0, GRID_WIDTH, CANVAS_HEIGHT-1, GRID_WIDTH, GRID_WIDTH);
 			}
 		}
@@ -86,8 +108,8 @@ public class GUI extends JFrame {
 		private void drawBoard(Graphics g) {
 			Graphics2D g2d = (Graphics2D)g;
 			g2d.setStroke(new BasicStroke(SYMBOL_STROKE_WIDTH, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-			for (int row = 0; row < board.getgridSize(); row++) {
-				for (int col = 0; col < board.getgridSize(); col++) {
+			for (int row = 0; row < numCells; row++) {
+				for (int col = 0; col < numCells; col++) {
 					int x1 = col * CELL_SIZE + CELL_PADDING;
 					int y1 = row * CELL_SIZE + CELL_PADDING;
 					if (board.getCell(row, col) == 1) {
