@@ -12,15 +12,15 @@ import javax.swing.SwingUtilities;
 
 
 @SuppressWarnings("serial")
-public class GUI extends JFrame implements ActionListener{
+public class GUI extends JFrame{
 
-	public static final int CELL_SIZE = 100;
-	public static final int GRID_WIDTH = 8;
+	public static final int CELL_SIZE = 50;
+	public static final int GRID_WIDTH = 4;
 	public static final int GRID_WIDTH_HALF = GRID_WIDTH / 2;
 	
 	public static final int CELL_PADDING = CELL_SIZE / 5;
 	public static final int SYMBOL_SIZE = CELL_SIZE - CELL_PADDING * 2;
-	public static final int SYMBOL_STROKE_WIDTH = 8;
+	public static final int SYMBOL_STROKE_WIDTH = 4;
 	
 	private int CANVAS_WIDTH;
 	private int CANVAS_HEIGHT;
@@ -30,21 +30,9 @@ public class GUI extends JFrame implements ActionListener{
 	
 	private Board board;
 	
-	JLabel heading = new JLabel("Welcome to SOS");
-	JLabel sizeLabel = new JLabel("Grid Size");
+	//Descriptive Components
+
 	
-	JTextField inSize = new JTextField(7);
-	
-	int userSize;
-	
-	public void actionPerformed(ActionEvent evt) {
-		String userIn = inSize.getText();
-		
-		userSize = Integer.parseInt(userIn);
-		board.setgridSize(userSize);
-		
-		repaint();
-	}
 	
 	public GUI(Board board) {
 		this.board = board;
@@ -53,16 +41,17 @@ public class GUI extends JFrame implements ActionListener{
 		pack();
 		setTitle("SOS GAME");
 		setVisible(true);
+		
+		JFrame gameFrame = new JFrame();
+
+		
 	}
 	
 	public Board getBoard() {
 		return board;
 	}
 	
-	private void setContentPane() {
-		
-		
-		
+	private void setContentPane() {	
 		gameBoardCanvas = new GameBoardCanvas();
 		CANVAS_WIDTH = CELL_SIZE * numCells;
 		CANVAS_HEIGHT = CELL_SIZE * numCells;
@@ -71,7 +60,10 @@ public class GUI extends JFrame implements ActionListener{
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(gameBoardCanvas, BorderLayout.CENTER);
+		
+
 	}
+	
 	
 	class GameBoardCanvas extends JPanel{
 		
@@ -93,6 +85,7 @@ public class GUI extends JFrame implements ActionListener{
 			drawGridLines(g);
 			drawBoard(g);
 		}
+		
 		
 		private void drawGridLines(Graphics g) {
 			g.setColor(Color.LIGHT_GRAY);
@@ -134,7 +127,11 @@ public class GUI extends JFrame implements ActionListener{
 			
 			}
 		});
+		
+		
 	}
+
+
 }
 
 
