@@ -36,9 +36,9 @@ public class SosGUI extends JFrame{
 
 	private Board board;
 	
-	private JLabel sizeLabel;
-	private JTextField sizeField;
-	private JButton startGame;
+	private String playerTurn;
+	private boolean blueTurn = true;
+	private boolean redTurn = false;
 
 	public SosGUI(Board board) {
 		this.board = board;
@@ -53,6 +53,8 @@ public class SosGUI extends JFrame{
 
 		CANVAS_WIDTH = CELL_SIZE * board.getgridSize();  
 		CANVAS_HEIGHT = CELL_SIZE * board.getgridSize();
+		
+
 		//add radio buttons
 		JPanel modePane = new JPanel();
 
@@ -115,7 +117,8 @@ public class SosGUI extends JFrame{
 
 		gameBoardCanvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
 	
-		gameStatusBar = new JLabel("Current Turn: ");
+		gameStatusBar = new JLabel("Current Turn: Blue");
+
 		gameStatusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 15));
 		gameStatusBar.setBorder(BorderFactory.createEmptyBorder(2, 5, 4, 5));
 
@@ -151,7 +154,7 @@ public class SosGUI extends JFrame{
 	}*/
 
 
-	class GameBoardCanvas extends JPanel {
+	class GameBoardCanvas extends JPanel{
 
 		GameBoardCanvas(){
 			addMouseListener(new MouseAdapter() {
@@ -159,6 +162,8 @@ public class SosGUI extends JFrame{
 						int rowSelected = e.getY() / CELL_SIZE;
 						int colSelected = e.getX() / CELL_SIZE;
 						board.makeMove(rowSelected, colSelected);
+						//gameStatusBar.setText("Current Turn: " + getTurn(blueTurn,redTurn));
+						
 					repaint(); 
 				}
 			});
@@ -193,15 +198,18 @@ public class SosGUI extends JFrame{
 				for (int col = 0; col < board.getgridSize(); ++col) {
 					int x1 = col * CELL_SIZE + CELL_PADDING;
 					int y1 = row * CELL_SIZE + CELL_PADDING;
-					if (board.getCell(row,col) == Cell.CROSS) {
-						g2d.setColor(Color.RED);
+					if (board.getCell(row,col) == Cell.ESS) {
+						
+						g2d.setColor(Color.BLUE);
+
 						int x2 = (col + 1) * CELL_SIZE - CELL_PADDING;
 						int y2 = (row + 1) * CELL_SIZE - CELL_PADDING;
 						g2d.setFont(myFont);
 						g2d.drawString("S", x1, y2);
-						//g2d.drawLine(x2, y1, x1, y2);
 					} else if (board.getCell(row,col) == Cell.NOUGHT) {
-						g2d.setColor(Color.BLUE);
+						
+						g2d.setColor(Color.RED);
+						
 						g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
 					}
 				}
@@ -211,7 +219,17 @@ public class SosGUI extends JFrame{
 	}
 	
 
-	
+	/*public String getTurn(boolean b, boolean r) {
+		String playerTurn = "Blue";
+		if (b == true && r == false) {
+			playerTurn = "Blue";
+		}
+		else if (b == false && r == true) {
+			playerTurn = "Red";
+		}
+		
+		return playerTurn;
+	}*/
 
 	
 

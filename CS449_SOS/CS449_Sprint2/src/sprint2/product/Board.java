@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Board {
 	
-	public enum Cell {EMPTY, CROSS, NOUGHT}
+	public enum Cell {EMPTY, ESS, NOUGHT}
 	
 	private Cell[][] grid;
 	private int gridSize=5;
@@ -58,7 +58,7 @@ public class Board {
 	
 	public void makeMove(int row, int col) {
 		if (row >= 0 && row < gridSize && col >= 0 && col < gridSize && grid[row][col] == Cell.EMPTY) {
-			grid[row][col] = (turn == 'S') ? Cell.CROSS : Cell.NOUGHT;
+			grid[row][col] = (turn == 'S') ? Cell.ESS : Cell.NOUGHT;
 			turn = (turn == 'S') ? 'O' : 'S';
 		}
 	}

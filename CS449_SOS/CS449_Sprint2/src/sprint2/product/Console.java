@@ -24,7 +24,7 @@ public class Console {
 	}
 	
 	private char symbol(Cell cell) {
-		if (cell==Cell.CROSS)
+		if (cell==Cell.ESS)
 			return 'S';
 		else
 			if (cell==Cell.NOUGHT)
