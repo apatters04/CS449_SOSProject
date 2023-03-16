@@ -1,20 +1,14 @@
 package sprint2.product;
 
 import java.util.Scanner;
+import sprint2.product.Board.Cell;
 
 public class Console {
 	private Board board;
 	
 	public Console(Board board) {
 		this.board = board;
-		
-		@SuppressWarnings("resource")
-		Scanner mySize = new Scanner(System.in);
-		System.out.println("Enter grid size: ");
-		int size = mySize.nextInt();
-		
-		board.setgridSize(size);
-		
+
 	}
 	
 	public void displayBoard() {
@@ -28,6 +22,17 @@ public class Console {
 		
 		System.out.println("----------");
 	}
+	
+	private char symbol(Cell cell) {
+		if (cell==Cell.CROSS)
+			return 'S';
+		else
+			if (cell==Cell.NOUGHT)
+				return 'O';
+			else return ' ';
+	}
+	
+	
 	
 	public static void main(String[] args) {
 
