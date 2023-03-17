@@ -5,6 +5,7 @@ import sprint2.product.Board.Cell;
 
 public class Console {
 	private Board board;
+	private String choice;
 	
 	public Console(Board board) {
 		this.board = board;
@@ -21,22 +22,24 @@ public class Console {
 		}
 		
 		System.out.println("----------");
+		
 	}
 	
-	private char symbol(Cell cell) {
-		if (cell==Cell.ESS)
-			return 'S';
+	private String symbol(Cell cell) {
+		if (cell==Cell.BLUE)
+			return "Blue";
 		else
-			if (cell==Cell.NOUGHT)
-				return 'O';
-			else return ' ';
+			if (cell==Cell.RED)
+				return "Red";
+			else return " ";
 	}
-	
 	
 	
 	public static void main(String[] args) {
 
 		new Console(new Board()).displayBoard();;
+		
+		
 	}
 
 }

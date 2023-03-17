@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class Board {
 	
-	public enum Cell {EMPTY, ESS, NOUGHT}
+	public enum Cell {EMPTY, BLUE, RED}
 	
 	private Cell[][] grid;
 	private int gridSize=5;
-	private char turn;
+	private String turn;
+	private String turnChoice;
 	
 	private boolean playOneTurn = true;
 	private boolean playTwoTurn = false;
@@ -36,7 +37,7 @@ public class Board {
 				grid[row][col] = Cell.EMPTY;
 			}
 		}
-		turn = 'X';
+		turn = "Blue";
 	}
 
 	public int getgridSize() {
@@ -52,17 +53,20 @@ public class Board {
 		}
 	}
 	
-	public char getTurn() {
+	public String getTurn() {
 		return turn;
 	}
 	
+
+	
 	public void makeMove(int row, int col) {
 		if (row >= 0 && row < gridSize && col >= 0 && col < gridSize && grid[row][col] == Cell.EMPTY) {
-			grid[row][col] = (turn == 'S') ? Cell.ESS : Cell.NOUGHT;
-			turn = (turn == 'S') ? 'O' : 'S';
+			
+			grid[row][col] = (turn == "Blue") ? Cell.BLUE : Cell.RED;
+			turn = (turn == "Blue") ? "Red" : "Blue";
 		}
 	}
-	
+
 
 
 }

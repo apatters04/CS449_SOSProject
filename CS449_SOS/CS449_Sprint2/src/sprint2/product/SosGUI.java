@@ -4,6 +4,7 @@ package sprint2.product;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -36,9 +37,15 @@ public class SosGUI extends JFrame{
 
 	private Board board;
 	
-	private String playerTurn;
-	private boolean blueTurn = true;
-	private boolean redTurn = false;
+	final static String S = "S";
+	final static String O = "O";
+	
+	private JRadioButton sBlueMove;
+	private JRadioButton oBlueMove;
+	
+	private JRadioButton sRedMove;
+	private JRadioButton oRedMove;
+
 
 	public SosGUI(Board board) {
 		this.board = board;
@@ -82,16 +89,28 @@ public class SosGUI extends JFrame{
 		modePane.setPreferredSize(new Dimension(CANVAS_WIDTH, 75));
 		
 		//Blue move choice S or O
-		JRadioButton sBlueMove = new JRadioButton("S");
-		JRadioButton oBlueMove = new JRadioButton("O");
+		sBlueMove = new JRadioButton("S");
+		sBlueMove.setMnemonic(KeyEvent.VK_D);
+		sBlueMove.setActionCommand("S");
+		
+		oBlueMove = new JRadioButton("O");
+		oBlueMove.setMnemonic(KeyEvent.VK_D);
+		oBlueMove.setActionCommand("O");
+		
 		ButtonGroup blueChoiceGroup = new ButtonGroup();
 		blueChoiceGroup.add(sBlueMove);
 		blueChoiceGroup.add(oBlueMove);
 		sBlueMove.setSelected(true);
 		
 		//Red  move choice S or O
-		JRadioButton sRedMove = new JRadioButton("S");
-		JRadioButton oRedMove = new JRadioButton("O");
+		sRedMove = new JRadioButton("S");
+		sRedMove.setMnemonic(KeyEvent.VK_D);
+		sRedMove.setActionCommand("S");
+		
+		oRedMove = new JRadioButton("O");
+		oRedMove.setMnemonic(KeyEvent.VK_D);
+		oRedMove.setActionCommand("O");
+		
 		ButtonGroup redChoiceGroup = new ButtonGroup();
 		redChoiceGroup.add(sRedMove);
 		redChoiceGroup.add(oRedMove);
@@ -99,6 +118,8 @@ public class SosGUI extends JFrame{
 		//add Blue Player Information
 		JPanel bluePlayerPane = new JPanel(new GridLayout(5,5));
 		JLabel bluePlayLabel = new JLabel("Blue Player");
+		
+
 		
 		bluePlayerPane.add(bluePlayLabel);
 		bluePlayerPane.add(sBlueMove);
@@ -112,6 +133,7 @@ public class SosGUI extends JFrame{
 		redPlayerPane.add(sRedMove);
 		redPlayerPane.add(oRedMove);
 		
+		
 		//adding gameboard
 		gameBoardCanvas = new GameBoardCanvas();  
 
@@ -121,6 +143,7 @@ public class SosGUI extends JFrame{
 
 		gameStatusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 15));
 		gameStatusBar.setBorder(BorderFactory.createEmptyBorder(2, 5, 4, 5));
+		
 
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -134,22 +157,25 @@ public class SosGUI extends JFrame{
 
 	}
 	
-	//take user input
-	/*public void actionPerformed(ActionEvent e) {
-		String s = e.getActionCommand();
-		if (s.equals("Start")) {
-			sizeLabel.setText(sizeField.getText());
-			int size = Integer.parseInt(sizeField.getText());
-			board.setgridSize(size);
-			
-			
-			sizeField.setText("  ");
 
-			gameBoardCanvas = new GameBoardCanvas();
-
-			setContentPane();
-			
-			
+	/*public void actionPerformedBlue(ActionEvent b) {
+		if("S".equals(b.getActionCommand())) {
+			sBlueMove.setSelected(true);
+			//oBlueMove.setSelected(false);
+		}else if ("O".equals(b.getActionCommand())) {
+			oBlueMove.setSelected(true);
+			//sBlueMove.setSelected(false);
+		}
+	}
+	
+	public void actionPerformedRed(ActionEvent r) {
+		
+		if("S".equals(r.getActionCommand())) {
+			sRedMove.setSelected(true);
+			oRedMove.setSelected(false);
+		}else if ("O".equals(r.getActionCommand())) {
+			oRedMove.setSelected(true);
+			sRedMove.setSelected(false);
 		}
 	}*/
 
@@ -162,9 +188,10 @@ public class SosGUI extends JFrame{
 						int rowSelected = e.getY() / CELL_SIZE;
 						int colSelected = e.getX() / CELL_SIZE;
 						board.makeMove(rowSelected, colSelected);
-						//gameStatusBar.setText("Current Turn: " + getTurn(blueTurn,redTurn));
+
+						gameStatusBar.setText("Current Turn: " + board.getTurn());
 						
-					repaint(); 
+						repaint(); 
 				}
 			});
 		}
@@ -198,25 +225,37 @@ public class SosGUI extends JFrame{
 				for (int col = 0; col < board.getgridSize(); ++col) {
 					int x1 = col * CELL_SIZE + CELL_PADDING;
 					int y1 = row * CELL_SIZE + CELL_PADDING;
-					if (board.getCell(row,col) == Cell.ESS) {
-						
-						g2d.setColor(Color.BLUE);
+					
+					if (board.getCell(row,col) == Cell.BLUE) {
+						if (sBlueMove.isSelected() == true) {
+							g2d.setColor(Color.BLUE);
+							int y2 = (row + 1) * CELL_SIZE - CELL_PADDING;
+							g2d.setFont(myFont);
+							g2d.drawString("S", x1, y2);
+						}else if (oBlueMove.isSelected() == true) {
+							g2d.setColor(Color.BLUE);
+							g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
 
-						int x2 = (col + 1) * CELL_SIZE - CELL_PADDING;
-						int y2 = (row + 1) * CELL_SIZE - CELL_PADDING;
-						g2d.setFont(myFont);
-						g2d.drawString("S", x1, y2);
-					} else if (board.getCell(row,col) == Cell.NOUGHT) {
+						}
 						
-						g2d.setColor(Color.RED);
-						
-						g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
+					} else if (board.getCell(row,col) == Cell.RED) {
+						if (sRedMove.isSelected() == true) {
+							g2d.setColor(Color.RED);
+							int y2 = (row + 1) * CELL_SIZE - CELL_PADDING;
+							g2d.setFont(myFont);
+							g2d.drawString("S", x1, y2);
+						}else if (oRedMove.isSelected() == true) {
+							g2d.setColor(Color.RED);
+							g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
+
+						}
 					}
 				}
 			}
 		}
 
 	}
+
 	
 
 	/*public String getTurn(boolean b, boolean r) {
@@ -240,5 +279,6 @@ public class SosGUI extends JFrame{
 			}
 		});
 	}
+
 	
 }
