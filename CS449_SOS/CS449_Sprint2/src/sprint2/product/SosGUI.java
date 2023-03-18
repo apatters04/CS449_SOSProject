@@ -18,7 +18,7 @@ import sprint2.product.Board.Cell;
  */
 
 @SuppressWarnings("serial")
-public class SosGUI extends JFrame{
+public class SosGUI extends JFrame implements ActionListener{
 
 	public static final int CELL_SIZE = 50; 
 	public static final int GRID_WIDTH = 4;
@@ -39,6 +39,12 @@ public class SosGUI extends JFrame{
 	
 	final static String S = "S";
 	final static String O = "O";
+	
+	JLabel sizeLabel;
+	JTextField sizeField;
+	JButton startGame;
+	JRadioButton simpleModeButton = new JRadioButton("Simple");
+	JRadioButton generalModeButton = new JRadioButton("General");
 	
 	private JRadioButton sBlueMove;
 	private JRadioButton oBlueMove;
@@ -62,11 +68,11 @@ public class SosGUI extends JFrame{
 		CANVAS_HEIGHT = CELL_SIZE * board.getgridSize();
 		
 
-		//add radio buttons
+		//add mode buttons
 		JPanel modePane = new JPanel();
 
-		JRadioButton simpleModeButton = new JRadioButton("Simple");
-		JRadioButton generalModeButton = new JRadioButton("General");
+		simpleModeButton = new JRadioButton("Simple");
+		generalModeButton = new JRadioButton("General");
 		
 		ButtonGroup modeGroup = new ButtonGroup();
 		modeGroup.add(simpleModeButton);
@@ -78,15 +84,17 @@ public class SosGUI extends JFrame{
 		modePane.add(simpleModeButton, BorderLayout.LINE_START);
 		modePane.add(generalModeButton, BorderLayout.LINE_END);
 		
-		
-		JLabel sizeLabel = new JLabel("Enter GridSize");
-		JTextField sizeField = new JTextField(2);
-		JButton startGame = new JButton("Start");
+		//textfield for grid size
+		sizeLabel = new JLabel("Enter GridSize");
+		sizeField = new JTextField(2);
+		startGame = new JButton("Start");
 		modePane.add(sizeLabel);
 		modePane.add(sizeField);
 		modePane.add(startGame);
-		
+	
 		modePane.setPreferredSize(new Dimension(CANVAS_WIDTH, 75));
+		
+
 		
 		//Blue move choice S or O
 		sBlueMove = new JRadioButton("S");
@@ -150,34 +158,32 @@ public class SosGUI extends JFrame{
 		contentPane.add(modePane, BorderLayout.PAGE_START);
 		contentPane.add(bluePlayerPane, BorderLayout.LINE_START);
 		contentPane.add(redPlayerPane, BorderLayout.LINE_END);
+		
 		contentPane.add(gameBoardCanvas, BorderLayout.CENTER);
-		contentPane.add(gameStatusBar, BorderLayout.PAGE_END); 
-		
-		
+		contentPane.add(gameStatusBar, BorderLayout.PAGE_END); 	
 
 	}
 	
 
-	/*public void actionPerformedBlue(ActionEvent b) {
-		if("S".equals(b.getActionCommand())) {
-			sBlueMove.setSelected(true);
-			//oBlueMove.setSelected(false);
-		}else if ("O".equals(b.getActionCommand())) {
-			oBlueMove.setSelected(true);
-			//sBlueMove.setSelected(false);
+	public void actionPerformed(ActionEvent e) {
+		int userSize;
+		String s = e.getActionCommand();
+		if (s.equals("Start") && simpleModeButton.isSelected() == true) {
+
+			contentPane.add(gameBoardCanvas, BorderLayout.CENTER);
+		}
+		else if (s.equals("Start") && generalModeButton.isSelected() == true) {
+			sizeLabel.setText(sizeField.getText());
+			
+			userSize = Integer.parseInt(sizeField.getText());
+			
+			board.setgridSize(userSize);
+			
+
+			contentPane.add(gameBoardCanvas, BorderLayout.CENTER);
 		}
 	}
-	
-	public void actionPerformedRed(ActionEvent r) {
-		
-		if("S".equals(r.getActionCommand())) {
-			sRedMove.setSelected(true);
-			oRedMove.setSelected(false);
-		}else if ("O".equals(r.getActionCommand())) {
-			oRedMove.setSelected(true);
-			sRedMove.setSelected(false);
-		}
-	}*/
+
 
 
 	class GameBoardCanvas extends JPanel{
@@ -255,21 +261,6 @@ public class SosGUI extends JFrame{
 		}
 
 	}
-
-	
-
-	/*public String getTurn(boolean b, boolean r) {
-		String playerTurn = "Blue";
-		if (b == true && r == false) {
-			playerTurn = "Blue";
-		}
-		else if (b == false && r == true) {
-			playerTurn = "Red";
-		}
-		
-		return playerTurn;
-	}*/
-
 	
 
 	public static void main(String[] args) {
