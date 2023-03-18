@@ -13,8 +13,7 @@ import javax.swing.*;
 import sprint2.product.Board.Cell;
 
 /* 
- * The GUI code was originally written by 
- * Prof. Chua Hock Chuan, Nanyang Technological University 
+ * GUI Code references the work of Prof. Chua Hock Chuan, NTU
  */
 
 @SuppressWarnings("serial")
@@ -195,7 +194,8 @@ public class SosGUI extends JFrame {
 		}
 		
 		private void drawGridLines(Graphics g){
-			g.setColor(Color.LIGHT_GRAY);
+			g.setColor(Color.GRAY);
+			
 			for (int row = 1; row < board.getgridSize(); ++row) {
 				g.fillRoundRect(0, CELL_SIZE * row - GRID_WIDHT_HALF,
 						CANVAS_WIDTH-1, GRID_WIDTH, GRID_WIDTH, GRID_WIDTH);
@@ -218,14 +218,12 @@ public class SosGUI extends JFrame {
 					
 					if (board.getCell(rowSelected,colSelected) == Cell.BLUE) {
 						if (sBlueMove.isSelected() == true) {
-							playerMove = 0;
 							g2d.setColor(Color.BLUE);
 							int y2 = (rowSelected + 1) * CELL_SIZE - CELL_PADDING;
 							g2d.setFont(myFont);
 							g2d.drawString("S", x1, y2);
 							
 						}else if (oBlueMove.isSelected() == true) {
-							playerMove = 1;
 							g2d.setColor(Color.BLUE);
 							g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
 
