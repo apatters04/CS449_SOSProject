@@ -30,6 +30,9 @@ public class SosGUI extends JFrame implements ActionListener{
 
 	private int CANVAS_WIDTH; 
 	private int CANVAS_HEIGHT;
+	
+	private int rowSelected;
+	private int colSelected;
 
 	private GameBoardCanvas gameBoardCanvas; 
 	private JLabel gameStatusBar; 
@@ -51,6 +54,8 @@ public class SosGUI extends JFrame implements ActionListener{
 	
 	private JRadioButton sRedMove;
 	private JRadioButton oRedMove;
+	
+	private int playerMove;
 
 
 	public SosGUI(Board board) {
@@ -191,10 +196,10 @@ public class SosGUI extends JFrame implements ActionListener{
 		GameBoardCanvas(){
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {  
-						int rowSelected = e.getY() / CELL_SIZE;
-						int colSelected = e.getX() / CELL_SIZE;
-						board.makeMove(rowSelected, colSelected);
+						rowSelected = e.getY() / CELL_SIZE;
+						colSelected = e.getX() / CELL_SIZE;
 
+						board.makeMove(rowSelected, colSelected);
 						gameStatusBar.setText("Current Turn: " + board.getTurn());
 						
 						repaint(); 
@@ -227,30 +232,35 @@ public class SosGUI extends JFrame implements ActionListener{
 			Font myFont = new Font("Arial", 1, 50);
 			Graphics2D g2d = (Graphics2D)g;
 			g2d.setStroke(new BasicStroke(SYMBOL_STROKE_WIDTH, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)); 
-			for (int row = 0; row < board.getgridSize(); ++row) {
-				for (int col = 0; col < board.getgridSize(); ++col) {
-					int x1 = col * CELL_SIZE + CELL_PADDING;
-					int y1 = row * CELL_SIZE + CELL_PADDING;
+			for (int rowSelected = 0; rowSelected < board.getgridSize(); ++rowSelected) {
+				for (int colSelected = 0; colSelected < board.getgridSize(); ++colSelected) {
+					int x1 = colSelected * CELL_SIZE + CELL_PADDING;
+					int y1 = rowSelected * CELL_SIZE + CELL_PADDING;
 					
-					if (board.getCell(row,col) == Cell.BLUE) {
+					if (board.getCell(rowSelected,colSelected) == Cell.BLUE) {
 						if (sBlueMove.isSelected() == true) {
+							playerMove = 0;
 							g2d.setColor(Color.BLUE);
-							int y2 = (row + 1) * CELL_SIZE - CELL_PADDING;
+							int y2 = (rowSelected + 1) * CELL_SIZE - CELL_PADDING;
 							g2d.setFont(myFont);
 							g2d.drawString("S", x1, y2);
+							
 						}else if (oBlueMove.isSelected() == true) {
+							playerMove = 1;
 							g2d.setColor(Color.BLUE);
 							g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
 
 						}
 						
-					} else if (board.getCell(row,col) == Cell.RED) {
+					} else if (board.getCell(rowSelected,colSelected) == Cell.RED) {
 						if (sRedMove.isSelected() == true) {
+
 							g2d.setColor(Color.RED);
-							int y2 = (row + 1) * CELL_SIZE - CELL_PADDING;
+							int y2 = (rowSelected + 1) * CELL_SIZE - CELL_PADDING;
 							g2d.setFont(myFont);
 							g2d.drawString("S", x1, y2);
 						}else if (oRedMove.isSelected() == true) {
+
 							g2d.setColor(Color.RED);
 							g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
 

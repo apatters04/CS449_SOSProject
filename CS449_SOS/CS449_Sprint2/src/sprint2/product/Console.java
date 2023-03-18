@@ -27,10 +27,10 @@ public class Console {
 	
 	private String symbol(Cell cell) {
 		if (cell==Cell.BLUE)
-			return "Blue";
+			return "BLUE";
 		else
 			if (cell==Cell.RED)
-				return "Red";
+				return "BLUE";
 			else return " ";
 	}
 	

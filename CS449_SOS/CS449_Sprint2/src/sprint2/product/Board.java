@@ -4,12 +4,13 @@ import java.util.Scanner;
 
 public class Board {
 	
-	public enum Cell {EMPTY, BLUE, RED}
+	public enum Cell {EMPTY, BLUE, RED, ESS, NOUGHT}
 	
 	private Cell[][] grid;
 	private int gridSize;
 	private String turn;
-	private int gameMode;
+	private String turnChoice; // 0 - S : 1 - O
+	private int gameMode; // 0 - simple : 1 - general
 	public Board() {
 		setGameMode();
 		
@@ -33,16 +34,16 @@ public class Board {
 		this.gridSize = userSize;
 
 	}
+
+	public int getgridSize() {
+		return gridSize;
+	}
 	
 	public void setGameMode() {
 		Scanner myMode = new Scanner(System.in);
 		System.out.println("0) Simple or 1) General: ");
 		int  mode = myMode.nextInt();
 		this.gameMode = mode;
-		
-		
-
-		
 
 	}
 	
@@ -55,9 +56,6 @@ public class Board {
 		turn = "Blue";
 	}
 
-	public int getgridSize() {
-		return gridSize;
-	}
 	
 	public Cell getCell(int row, int col) {
 		if (row >= 0 && row < gridSize && col >= 0 && col < gridSize) {
@@ -72,12 +70,19 @@ public class Board {
 		return turn;
 	}
 	
-
+	public void getTurnType() {
+		Scanner userChoice  = new Scanner(System.in);
+		System.out.println("Select letter to play | S or O : ");
+		String  choice = userChoice.nextLine();
+		this.turnChoice = choice;
+	}
 	
 	public void makeMove(int row, int col) {
 		if (row >= 0 && row < gridSize && col >= 0 && col < gridSize && grid[row][col] == Cell.EMPTY) {
+
+			//if (turn == "Blue") {
+				grid[row][col] = (turn == "Blue") ? Cell.BLUE : Cell.RED;
 			
-			grid[row][col] = (turn == "Blue") ? Cell.BLUE : Cell.RED;
 			turn = (turn == "Blue") ? "Red" : "Blue";
 		}
 	}

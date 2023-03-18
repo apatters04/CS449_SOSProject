@@ -9,13 +9,14 @@ import org.junit.Test;
 import sprint2.product.Board;
 import sprint2.product.Board.Cell;
 
-public class TestBlueMoves {
+public class TestRedMoves {
 
 	private Board board;
 
 	@Before
 	public void setUp() throws Exception {
 		board = new Board();
+		board.makeMove(1, 1);
 	}
 
 	@After
@@ -23,38 +24,38 @@ public class TestBlueMoves {
 	}
 
 	@Test
-	public void testBlueTurnMoveVacantCell() {
+	public void testRedTurnMoveVacantCell() {
 		board.getTurnType();
 		board.makeMove(0, 0);
-		assertEquals("", board.getCell(0, 0), Cell.BLUE);
-		assertEquals("", board.getTurn(), "Red");
+		assertEquals("", board.getCell(0, 0), Cell.RED);
+		assertEquals("", board.getTurn(), "Blue");
 	}
 
 	@Test
-	public void testBlueTurnMoveNonVacantCell() {
+	public void testRedTurnMoveNonVacantCell() {
 		board.getTurnType();
 		board.makeMove(0, 0);
 		board.getTurnType();
 		board.makeMove(1, 0);
-		assertEquals("", board.getCell(1, 0), Cell.RED);
-		assertEquals("", board.getTurn(), "Blue");
+		assertEquals("", board.getCell(1, 0), Cell.BLUE);
+		assertEquals("", board.getTurn(), "Red");
 		board.getTurnType();
-		board.makeMove(0, 0);
-		assertEquals("", board.getTurn(), "Blue");
+		board.makeMove(1, 0);
+		assertEquals("", board.getTurn(), "Red");
 	}
 
 	@Test
-	public void testBlueTurnInvalidRowMove() {
+	public void testRedTurnInvalidRowMove() {
 		board.getTurnType();
 		board.makeMove((board.getgridSize() + 1), 0);
-		assertEquals("", board.getTurn(), "Blue");
+		assertEquals("", board.getTurn(), "Red");
 	}
 
 	@Test
-	public void testBlueTurnInvalidColumnMove() {
+	public void testRedTurnInvalidColumnMove() {
 		board.getTurnType();
 		board.makeMove(0, (board.getgridSize() + 1));
-		assertEquals("", board.getTurn(), "Blue");
+		assertEquals("", board.getTurn(), "Red");
 	}
 
 }
