@@ -7,32 +7,37 @@ public class Board {
 	public enum Cell {EMPTY, BLUE, RED, ESS, NOUGHT}
 	
 	private Cell[][] grid;
-	private int gridSize;
+	private int gridSize = 0;
 	private String turn;
-	private String turnChoice; // 0 - S : 1 - O
+	private String turnChoice;
 	private int gameMode; // 0 - simple : 1 - general
 	public Board() {
 		setGameMode();
+		setgridSize();
 		
-		if (gameMode == 1) {
-			Scanner mySize = new Scanner(System.in);
-			System.out.println("Enter grid size: ");
-			int size = mySize.nextInt();
-			setgridSize(size);
-		}else {
-			this.gridSize = 3;
-		}
-
 		grid = new Cell[gridSize][gridSize];
 
 		initBoard();
 		
 	}
 	
-	public void setgridSize(int userSize) {
-
-		this.gridSize = userSize;
-
+	public void setgridSize() {
+		
+		while (gridSize < 3) {
+			Scanner mySize = new Scanner(System.in);
+			System.out.println("Enter grid size: ");
+			int size = mySize.nextInt();
+			
+			this.gridSize = size;
+			
+			if (gridSize < 3) {
+				System.out.println("Please enter a grid size greater than 2");
+				continue;
+			}
+			else {
+				break;
+			}
+		}
 	}
 
 	public int getgridSize() {

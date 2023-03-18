@@ -18,7 +18,7 @@ import sprint2.product.Board.Cell;
  */
 
 @SuppressWarnings("serial")
-public class SosGUI extends JFrame implements ActionListener{
+public class SosGUI extends JFrame {
 
 	public static final int CELL_SIZE = 50; 
 	public static final int GRID_WIDTH = 4;
@@ -30,9 +30,7 @@ public class SosGUI extends JFrame implements ActionListener{
 
 	private int CANVAS_WIDTH; 
 	private int CANVAS_HEIGHT;
-	
-	private int rowSelected;
-	private int colSelected;
+
 
 	private GameBoardCanvas gameBoardCanvas; 
 	private JLabel gameStatusBar; 
@@ -170,25 +168,6 @@ public class SosGUI extends JFrame implements ActionListener{
 	}
 	
 
-	public void actionPerformed(ActionEvent e) {
-		int userSize;
-		String s = e.getActionCommand();
-		if (s.equals("Start") && simpleModeButton.isSelected() == true) {
-
-			contentPane.add(gameBoardCanvas, BorderLayout.CENTER);
-		}
-		else if (s.equals("Start") && generalModeButton.isSelected() == true) {
-			sizeLabel.setText(sizeField.getText());
-			
-			userSize = Integer.parseInt(sizeField.getText());
-			
-			board.setgridSize(userSize);
-			
-
-			contentPane.add(gameBoardCanvas, BorderLayout.CENTER);
-		}
-	}
-
 
 
 	class GameBoardCanvas extends JPanel{
@@ -196,8 +175,8 @@ public class SosGUI extends JFrame implements ActionListener{
 		GameBoardCanvas(){
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {  
-						rowSelected = e.getY() / CELL_SIZE;
-						colSelected = e.getX() / CELL_SIZE;
+						int rowSelected = e.getY() / CELL_SIZE;
+						int colSelected = e.getX() / CELL_SIZE;
 
 						board.makeMove(rowSelected, colSelected);
 						gameStatusBar.setText("Current Turn: " + board.getTurn());
