@@ -34,12 +34,10 @@ public class Console {
 			else return " ";
 	}
 	
-	
 	public static void main(String[] args) {
 
 		new Console(new Board()).displayBoard();;
-		
-		
+
 	}
 
 }
