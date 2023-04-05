@@ -31,7 +31,7 @@ public class Console {
 			return "BLUE";
 		else
 			if (cell==Cell.RED)
-				return "BLUE";
+				return "RED";
 			else return " ";
 	}
 	

@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Board {
 	
 	public enum Cell {EMPTY, BLUE, RED, ESS, NOUGHT}
+	public enum GameState {PLAYING, DRAW, BLUE_WIN, RED_WIN}
 	
 	private Cell[][] grid;
 	private int gridSize = 0;
@@ -27,6 +28,8 @@ public class Board {
 			Scanner mySize = new Scanner(System.in);
 			System.out.println("Enter grid size: ");
 			int size = mySize.nextInt();
+
+			mySize.close();
 			
 			this.gridSize = size;
 			
@@ -49,7 +52,11 @@ public class Board {
 		System.out.println("0) Simple or 1) General: ");
 		int  mode = myMode.nextInt();
 		this.gameMode = mode;
-
+		myMode.close();
+	}
+	
+	public int getGameMode() {
+		return gameMode;
 	}
 	
 	public void initBoard() {
@@ -80,6 +87,7 @@ public class Board {
 		System.out.println("Select letter to play | S or O : ");
 		String  choice = userChoice.nextLine();
 		this.turnChoice = choice;
+		userChoice.close();
 	}
 	
 	public void makeMove(int row, int col) {
