@@ -1,7 +1,8 @@
-package sprint2.product;
+package sprint3.product;
 
 import java.util.Scanner;
-import sprint2.product.Board.Cell;
+
+import sprint3.product.Board.Cell;
 
 public class Console {
 	private Board board;

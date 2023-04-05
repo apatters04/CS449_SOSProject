@@ -1,13 +1,14 @@
-package sprint2.test;
+package sprint3.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import sprint3.product.Board;
+import sprint3.product.SosGUI;
+
 import org.junit.After;
 import org.junit.Before;
-import sprint2.product.Board;
-import sprint2.product.SosGUI;
 
 class TestGUI {
 	private Board board;

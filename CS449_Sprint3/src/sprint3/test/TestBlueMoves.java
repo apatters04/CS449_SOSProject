@@ -1,4 +1,4 @@
-package sprint2.test;
+package sprint3.test;
 
 import static org.junit.Assert.*;
 
@@ -6,8 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import sprint2.product.Board;
-import sprint2.product.Board.Cell;
+import sprint3.product.Board;
+import sprint3.product.Board.Cell;
 
 public class TestBlueMoves {
 

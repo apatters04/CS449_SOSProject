@@ -1,4 +1,4 @@
-package sprint2.product;
+package sprint3.product;
 
 
 import java.awt.*;
@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
-import sprint2.product.Board.Cell;
+import sprint3.product.Board.Cell;
 
 /* 
  * GUI Code references the work of Prof. Chua Hock Chuan, NTU
