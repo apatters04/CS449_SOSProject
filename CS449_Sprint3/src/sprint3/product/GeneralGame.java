@@ -1,5 +1,5 @@
 package sprint3.product;
 
-public class GeneralGame {
-
+public class GeneralGame extends SimpleGame {
+	
 }

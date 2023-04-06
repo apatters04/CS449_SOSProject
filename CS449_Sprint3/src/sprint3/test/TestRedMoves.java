@@ -25,7 +25,6 @@ public class TestRedMoves {
 
 	@Test
 	public void testRedTurnMoveVacantCell() {
-		board.getTurnType();
 		board.makeMove(0, 0);
 		assertEquals("", board.getCell(0, 0), Cell.RED);
 		assertEquals("", board.getTurn(), "Blue");
@@ -33,27 +32,22 @@ public class TestRedMoves {
 
 	@Test
 	public void testRedTurnMoveNonVacantCell() {
-		board.getTurnType();
 		board.makeMove(0, 0);
-		board.getTurnType();
 		board.makeMove(1, 0);
 		assertEquals("", board.getCell(1, 0), Cell.BLUE);
 		assertEquals("", board.getTurn(), "Red");
-		board.getTurnType();
 		board.makeMove(1, 0);
 		assertEquals("", board.getTurn(), "Red");
 	}
 
 	@Test
 	public void testRedTurnInvalidRowMove() {
-		board.getTurnType();
 		board.makeMove((board.getgridSize() + 1), 0);
 		assertEquals("", board.getTurn(), "Red");
 	}
 
 	@Test
 	public void testRedTurnInvalidColumnMove() {
-		board.getTurnType();
 		board.makeMove(0, (board.getgridSize() + 1));
 		assertEquals("", board.getTurn(), "Red");
 	}

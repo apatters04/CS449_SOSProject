@@ -24,7 +24,6 @@ public class TestBlueMoves {
 
 	@Test
 	public void testBlueTurnMoveVacantCell() {
-		board.getTurnType();
 		board.makeMove(0, 0);
 		assertEquals("", board.getCell(0, 0), Cell.BLUE);
 		assertEquals("", board.getTurn(), "Red");
@@ -32,27 +31,22 @@ public class TestBlueMoves {
 
 	@Test
 	public void testBlueTurnMoveNonVacantCell() {
-		board.getTurnType();
 		board.makeMove(0, 0);
-		board.getTurnType();
 		board.makeMove(1, 0);
 		assertEquals("", board.getCell(1, 0), Cell.RED);
 		assertEquals("", board.getTurn(), "Blue");
-		board.getTurnType();
 		board.makeMove(0, 0);
 		assertEquals("", board.getTurn(), "Blue");
 	}
 
 	@Test
 	public void testBlueTurnInvalidRowMove() {
-		board.getTurnType();
 		board.makeMove((board.getgridSize() + 1), 0);
 		assertEquals("", board.getTurn(), "Blue");
 	}
 
 	@Test
 	public void testBlueTurnInvalidColumnMove() {
-		board.getTurnType();
 		board.makeMove(0, (board.getgridSize() + 1));
 		assertEquals("", board.getTurn(), "Blue");
 	}

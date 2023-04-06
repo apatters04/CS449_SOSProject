@@ -10,8 +10,10 @@ public class Board {
 	private Cell[][] grid;
 	private int gridSize = 0;
 	private String turn;
-	private String turnChoice;
 	private int gameMode; // 0 - simple : 1 - general
+	
+	private GameState currentGameState;
+	
 	public Board() {
 		setGameMode();
 		setgridSize();
@@ -22,14 +24,22 @@ public class Board {
 		
 	}
 	
+	public void resetGame() {
+		for (int row = 0; row < gridSize; ++row) {
+			for (int col = 0; col < gridSize; ++col) {
+				grid[row][col] = Cell.EMPTY;
+			}
+		}
+		currentGameState = GameState.PLAYING;
+		turn = "Blue";
+	}
+	
 	public void setgridSize() {
 		
 		while (gridSize < 3) {
 			Scanner mySize = new Scanner(System.in);
 			System.out.println("Enter grid size: ");
 			int size = mySize.nextInt();
-
-			mySize.close();
 			
 			this.gridSize = size;
 			
@@ -52,7 +62,6 @@ public class Board {
 		System.out.println("0) Simple or 1) General: ");
 		int  mode = myMode.nextInt();
 		this.gameMode = mode;
-		myMode.close();
 	}
 	
 	public int getGameMode() {
@@ -81,23 +90,52 @@ public class Board {
 	public String getTurn() {
 		return turn;
 	}
-	
-	public void getTurnType() {
-		Scanner userChoice  = new Scanner(System.in);
-		System.out.println("Select letter to play | S or O : ");
-		String  choice = userChoice.nextLine();
-		this.turnChoice = choice;
-		userChoice.close();
-	}
+
 	
 	public void makeMove(int row, int col) {
 		if (row >= 0 && row < gridSize && col >= 0 && col < gridSize && grid[row][col] == Cell.EMPTY) {
 
 			//if (turn == "Blue") {
 				grid[row][col] = (turn == "Blue") ? Cell.BLUE : Cell.RED;
-			
+			updateGameState(turn, row, col);
 			turn = (turn == "Blue") ? "Red" : "Blue";
 		}
+	}
+	
+	void updateGameState(String turn, int row, int col) {
+		if (hasWon(turn, row, col)) {
+			currentGameState = (turn == "Blue") ? GameState.BLUE_WIN : GameState.RED_WIN;
+		}
+		else if (isDraw()) {
+			currentGameState = GameState.DRAW;
+		}
+	}
+	
+	private boolean isDraw() {
+		for (int row = 0; row < gridSize; ++row) {
+			for (int col = 0; col < gridSize; ++col) {
+				if (grid[row][col] == Cell.EMPTY) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	private boolean hasWon(String turn, int row, int col) {
+		Cell token = (turn == "Blue") ? Cell.BLUE : Cell.RED;
+		return (grid[row][0] == token // 3-in-the-row
+				&& grid[row][1] == token && grid[row][2] == token
+				|| grid[0][col] == token // 3-in-the-column
+						&& grid[1][col] == token && grid[2][col] == token
+				|| row == col // 3-in-the-diagonal
+						&& grid[0][0] == token && grid[1][1] == token && grid[2][2] == token
+				|| row + col == 2 // 3-in-the-opposite-diagonal
+						&& grid[0][2] == token && grid[1][1] == token && grid[2][0] == token);
+	}
+	
+	public GameState getGameState() {
+		return currentGameState;
 	}
 
 }
