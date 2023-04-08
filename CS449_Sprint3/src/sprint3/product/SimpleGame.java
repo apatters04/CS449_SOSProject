@@ -30,6 +30,39 @@ public class SimpleGame {
 							sosState = true;
 							break;
 						}
+					} 
+					
+					else if ((row - 1) < 0) { //top row check
+						if ((board.getCell(row, col - 1) == Cell.ESS) && (board.getCell(row, col + 1) == Cell.ESS)){
+							sosState = true;
+							break;
+						}
+					}	
+					
+					else if ((row + 1) >= board.getgridSize()) { //bottom row check
+						if ((board.getCell(row, col - 1) == Cell.ESS) && (board.getCell(row, col + 1) == Cell.ESS)){
+							sosState = true;
+							break;
+						}
+					}
+					
+					else if ((col - 1) < 0) { //left column check
+						if ((board.getCell(row - 1, col) == Cell.ESS) && (board.getCell(row + 1, col) == Cell.ESS)){
+							sosState = true;
+							break;
+						}
+					}
+					
+					else if ((col + 1) >= board.getgridSize()) { //right column check
+						if ((board.getCell(row - 1, col) == Cell.ESS) && (board.getCell(row + 1, col) == Cell.ESS)){
+							sosState = true;
+							break;
+						}
+					}
+					
+					else if ( ((row - 1) < 0 && (col - 1) < 0) ||  ((row - 1) < 0 && (col + 1) >= board.getgridSize()) || ((row + 1) >= board.getgridSize() && (col + 1) >= board.getgridSize()) || ((row + 1) >= board.getgridSize() && (col - 1) < 0)) {
+						sosState = false; //if O is in a corner, SOS is false and ignored.
+						break;
 					}
 					
 				}

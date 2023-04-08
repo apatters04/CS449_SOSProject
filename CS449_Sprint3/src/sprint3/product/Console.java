@@ -94,10 +94,8 @@ public class Console {
 				if (row < 0 || row > board.getgridSize() || column < 0 || column > board.getgridSize())
 					System.out.println("Invalid move at (" + row + "," + column + ")");
 				else {
-					
 					board.makeMove(row, column, play);
 					board.updateGameState(simpGame.hasSOS(board, board.getgridSize()));
-					
 					displayBoard();
 					done = isOver();
 				}
