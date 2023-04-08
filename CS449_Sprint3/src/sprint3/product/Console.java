@@ -2,7 +2,7 @@ package sprint3.product;
 
 import java.util.Scanner;
 
-import sprint3.product.Board.Cell;
+//import sprint3.product.Board.Cell;
 import sprint3.product.Board.GameState;
 import sprint3.product.SimpleGame;
 import sprint3.product.GeneralGame;
@@ -12,6 +12,8 @@ public class Console {
 	private Board board;
 	private SimpleGame simpGame;
 	private GeneralGame genGame;
+	
+	private boolean hasWin;
 	
 	public Console(Board board) {
 		this.board = board;
@@ -33,7 +35,7 @@ public class Console {
 		
 	}
 	
-	private String symbol(Cell cell) {
+	/*private String turn(Cell cell) {
 		if (cell==Cell.BLUE)
 			return "BLUE";
 		else
@@ -41,6 +43,15 @@ public class Console {
 				return "RED";
 			else return " ";
 	}
+	
+	private char symbol(PlayType play) {
+		if (play==PlayType.ESS)
+			return 'S';
+		else
+			if (play==PlayType.OH)
+				return 'O';
+			else return ' ';
+	}*/
 	
 	private boolean isOver() {
 		GameState state = board.getGameState();
@@ -72,7 +83,10 @@ public class Console {
 
 			while (!done) {
 				int row, column;
+				char play;
 				System.out.println("Current player: " + board.getTurn());
+				System.out.println("S or O: ");
+				play = in.next().charAt(0);
 				System.out.print("Move at row: ");
 				row = in.nextInt();
 				System.out.print("Move at column: ");
@@ -80,7 +94,10 @@ public class Console {
 				if (row < 0 || row > board.getgridSize() || column < 0 || column > board.getgridSize())
 					System.out.println("Invalid move at (" + row + "," + column + ")");
 				else {
-					board.makeMove(row, column);
+					
+					board.makeMove(row, column, play);
+					board.updateGameState(simpGame.hasSOS(board, board.getgridSize()));
+					
 					displayBoard();
 					done = isOver();
 				}
@@ -98,7 +115,10 @@ public class Console {
 
 			while (!done) {
 				int row, column;
+				char play;
 				System.out.println("Current player: " + board.getTurn());
+				System.out.println("S or O: ");
+				play = in.next().charAt(0);
 				System.out.print("Move at row: ");
 				row = in.nextInt();
 				System.out.print("Move at column: ");
@@ -106,7 +126,7 @@ public class Console {
 				if (row < 0 || row > board.getgridSize() || column < 0 || column > board.getgridSize())
 					System.out.println("Invalid move at (" + row + "," + column + ")");
 				else {
-					board.makeMove(row, column);
+					board.makeMove(row, column, play);
 					displayBoard();
 					done = isOver();
 				}

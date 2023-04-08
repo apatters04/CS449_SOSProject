@@ -4,12 +4,14 @@ import java.util.Scanner;
 
 public class Board {
 	
-	public enum Cell {EMPTY, BLUE, RED, ESS, NOUGHT}
+	public enum Cell {EMPTY, BLUE, RED, ESS, OH}
+	public enum PlayType {ESS, OH}
 	public enum GameState {PLAYING, DRAW, BLUE_WIN, RED_WIN}
 	
 	private Cell[][] grid;
 	private int gridSize = 0;
 	private String turn;
+	private char play;
 	private int gameMode; // 0 - simple : 1 - general
 	
 	private GameState currentGameState;
@@ -92,19 +94,22 @@ public class Board {
 	}
 
 	
-	public void makeMove(int row, int col) {
+	public void makeMove(int row, int col, char playType) {
 		if (row >= 0 && row < gridSize && col >= 0 && col < gridSize && grid[row][col] == Cell.EMPTY) {
-
-			//if (turn == "Blue") {
-				grid[row][col] = (turn == "Blue") ? Cell.BLUE : Cell.RED;
-			updateGameState(turn, row, col);
+			if (playType == 'S') {
+				grid[row][col] = Cell.ESS;
+			}else if (playType == 'O') {
+				grid[row][col] = Cell.OH;
+			}
+			//grid[row][col] = (turn == "Blue") ? Cell.BLUE : Cell.RED;
+			//updateGameState();
 			turn = (turn == "Blue") ? "Red" : "Blue";
 		}
 	}
 	
-	void updateGameState(String turn, int row, int col) {
-		if (hasWon(turn, row, col)) {
-			currentGameState = (turn == "Blue") ? GameState.BLUE_WIN : GameState.RED_WIN;
+	void updateGameState(boolean win) {
+		if (hasWon(win)) {
+			currentGameState = (turn == "Red") ? GameState.BLUE_WIN : GameState.RED_WIN;
 		}
 		else if (isDraw()) {
 			currentGameState = GameState.DRAW;
@@ -122,16 +127,10 @@ public class Board {
 		return true;
 	}
 	
-	private boolean hasWon(String turn, int row, int col) {
-		Cell token = (turn == "Blue") ? Cell.BLUE : Cell.RED;
-		return (grid[row][0] == token // 3-in-the-row
-				&& grid[row][1] == token && grid[row][2] == token
-				|| grid[0][col] == token // 3-in-the-column
-						&& grid[1][col] == token && grid[2][col] == token
-				|| row == col // 3-in-the-diagonal
-						&& grid[0][0] == token && grid[1][1] == token && grid[2][2] == token
-				|| row + col == 2 // 3-in-the-opposite-diagonal
-						&& grid[0][2] == token && grid[1][1] == token && grid[2][0] == token);
+	private boolean hasWon(boolean win) {
+		boolean hasWin = win;
+		
+		return hasWin;
 	}
 	
 	public GameState getGameState() {

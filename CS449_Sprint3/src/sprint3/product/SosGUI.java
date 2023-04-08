@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 import sprint3.product.Board.Cell;
+import sprint3.product.Board.GameState;
 
 /* 
  * GUI Code references the work of Prof. Chua Hock Chuan, NTU
@@ -149,7 +150,7 @@ public class SosGUI extends JFrame {
 
 		gameBoardCanvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
 	
-		gameStatusBar = new JLabel("Current Turn: Blue");
+		gameStatusBar = new JLabel("    ");
 
 		gameStatusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 15));
 		gameStatusBar.setBorder(BorderFactory.createEmptyBorder(2, 5, 4, 5));
@@ -174,13 +175,16 @@ public class SosGUI extends JFrame {
 		GameBoardCanvas(){
 			addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {  
+					if (board.getGameState() == GameState.PLAYING) {
 						int rowSelected = e.getY() / CELL_SIZE;
 						int colSelected = e.getX() / CELL_SIZE;
-
 						board.makeMove(rowSelected, colSelected);
-						gameStatusBar.setText("Current Turn: " + board.getTurn());
 						
-						repaint(); 
+					} 
+					else {
+						board.resetGame();
+					}
+					repaint(); 
 				}
 			});
 		}
@@ -191,6 +195,7 @@ public class SosGUI extends JFrame {
 			setBackground(Color.WHITE);
 			drawGridLines(g);
 			drawBoard(g);
+			printStatusBar();
 		}
 		
 		private void drawGridLines(Graphics g){
@@ -244,6 +249,26 @@ public class SosGUI extends JFrame {
 						}
 					}
 				}
+			}
+		}
+		
+		private void printStatusBar(){
+			if (board.getGameState() == GameState.PLAYING) {
+				gameStatusBar.setForeground(Color.BLACK);
+				if (board.getTurn() == "Blue") {
+					gameStatusBar.setText("Blue's Turn");
+				} else {
+					gameStatusBar.setText("Red's Turn");
+				}
+			} else if (board.getGameState() == GameState.DRAW) {
+				gameStatusBar.setForeground(Color.RED);
+				gameStatusBar.setText("It's a Draw! Click to play again.");
+			} else if (board.getGameState() == GameState.BLUE_WIN) {
+				gameStatusBar.setForeground(Color.RED);
+				gameStatusBar.setText("Blue Won! Click to play again.");
+			} else if (board.getGameState()== GameState.RED_WIN) {
+				gameStatusBar.setForeground(Color.RED);
+				gameStatusBar.setText("Red Won! Click to play again.");
 			}
 		}
 
