@@ -19,15 +19,19 @@ public class SimpleGame {
 					if ( ((row - 1) >= 0) && ((row + 1) < board.getgridSize()) && ((col - 1) >= 0) && ((col + 1) < board.getgridSize())) { //not an edge case
 						if ((board.getCell(row - 1, col - 1) == Cell.ESS) && (board.getCell(row + 1, col + 1) == Cell.ESS)) {
 							sosState = true;
+							board.setCell(row, col, Cell.USED);
 							break;
 						} else if ((board.getCell(row - 1, col) == Cell.ESS) && (board.getCell(row + 1, col) == Cell.ESS)) {
 							sosState = true;
+							board.setCell(row, col, Cell.USED);
 							break;
 						} else if ((board.getCell(row - 1, col + 1) == Cell.ESS) && (board.getCell(row + 1, col - 1) == Cell.ESS)) {
 							sosState = true;
+							board.setCell(row, col, Cell.USED);
 							break;
 						} else if ((board.getCell(row, col - 1) == Cell.ESS) && (board.getCell(row, col + 1) == Cell.ESS)) {
 							sosState = true;
+							board.setCell(row, col, Cell.USED);
 							break;
 						}
 					} 
@@ -35,6 +39,7 @@ public class SimpleGame {
 					else if ((row - 1) < 0) { //top row check
 						if ((board.getCell(row, col - 1) == Cell.ESS) && (board.getCell(row, col + 1) == Cell.ESS)){
 							sosState = true;
+							board.setCell(row, col, Cell.USED);
 							break;
 						}
 					}	
@@ -42,6 +47,7 @@ public class SimpleGame {
 					else if ((row + 1) >= board.getgridSize()) { //bottom row check
 						if ((board.getCell(row, col - 1) == Cell.ESS) && (board.getCell(row, col + 1) == Cell.ESS)){
 							sosState = true;
+							board.setCell(row, col, Cell.USED);
 							break;
 						}
 					}
@@ -49,6 +55,7 @@ public class SimpleGame {
 					else if ((col - 1) < 0) { //left column check
 						if ((board.getCell(row - 1, col) == Cell.ESS) && (board.getCell(row + 1, col) == Cell.ESS)){
 							sosState = true;
+							board.setCell(row, col, Cell.USED);
 							break;
 						}
 					}
@@ -56,6 +63,7 @@ public class SimpleGame {
 					else if ((col + 1) >= board.getgridSize()) { //right column check
 						if ((board.getCell(row - 1, col) == Cell.ESS) && (board.getCell(row + 1, col) == Cell.ESS)){
 							sosState = true;
+							board.setCell(row, col, Cell.USED);
 							break;
 						}
 					}

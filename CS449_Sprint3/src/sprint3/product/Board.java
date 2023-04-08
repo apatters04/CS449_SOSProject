@@ -4,9 +4,8 @@ import java.util.Scanner;
 
 public class Board {
 	
-	public enum Cell {EMPTY, BLUE, RED, ESS, OH}
-	public enum PlayType {ESS, OH}
-	public enum GameState {PLAYING, DRAW, BLUE_WIN, RED_WIN}
+	public enum Cell {EMPTY, BLUE, RED, ESS, OH, USED}
+	public enum GameState {PLAYING, DRAW, BLUE_WIN, RED_WIN, END}
 	
 	private Cell[][] grid;
 	private int gridSize = 0;
@@ -89,6 +88,10 @@ public class Board {
 		}
 	}
 	
+	public void setCell(int row, int col, Cell input) {
+		grid[row][col] = input;
+	}
+	
 	public String getTurn() {
 		return turn;
 	}
@@ -111,12 +114,26 @@ public class Board {
 		if (hasWon(win)) {
 			currentGameState = (turn == "Red") ? GameState.BLUE_WIN : GameState.RED_WIN; //flips game state
 		}
-		else if (isDraw()) {
+		else if (isDraw() && (gameMode == 0)) {
 			currentGameState = GameState.DRAW;
+		}
+		else if (boardFull() && (gameMode == 1)) {
+			currentGameState = GameState.END;
 		}
 	}
 	
 	private boolean isDraw() {
+		for (int row = 0; row < gridSize; ++row) {
+			for (int col = 0; col < gridSize; ++col) {
+				if (grid[row][col] == Cell.EMPTY) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	boolean boardFull() {
 		for (int row = 0; row < gridSize; ++row) {
 			for (int col = 0; col < gridSize; ++col) {
 				if (grid[row][col] == Cell.EMPTY) {

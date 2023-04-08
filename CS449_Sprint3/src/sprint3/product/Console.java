@@ -13,8 +13,6 @@ public class Console {
 	private SimpleGame simpGame;
 	private GeneralGame genGame;
 	
-	private boolean hasWin;
-	
 	public Console(Board board) {
 		this.board = board;
 		this.simpGame = new SimpleGame();
@@ -67,6 +65,9 @@ public class Console {
 		else if (board.getGameState() == GameState.RED_WIN) {
 			System.out.println("RED WINS!");
 		}
+		else if (board.getGameState() == GameState.END) {
+			System.out.println("GAME END");
+		}
 		return true;
 	}
 	
@@ -104,10 +105,11 @@ public class Console {
 			in.close();
 		}
 		else if (board.getGameMode() == 1) {
+			board.resetGame();
 			Scanner in = new Scanner(System.in);
 			boolean done = false;
 			
-			genGame.startGame();
+			simpGame.startGame();
 			System.out.println("Gamemode: General");
 			System.out.println("Grid Size: " + board.getgridSize());
 
@@ -125,12 +127,31 @@ public class Console {
 					System.out.println("Invalid move at (" + row + "," + column + ")");
 				else {
 					board.makeMove(row, column, play);
+					if (genGame.hasSOS(board, board.getgridSize())) {
+						if (board.getTurn() == "Red") {
+							genGame.addBluePoints(1);
+						}else if (board.getTurn() == "Blue") {
+							genGame.addRedPoints(1);
+						}
+					}
+					System.out.println("Blue Points: " + genGame.getBluePoints());
+					System.out.println("Red Points: " + genGame.getRedPoints());
+					board.updateGameState(board.boardFull());
 					displayBoard();
 					done = isOver();
 				}
 			}
+			
+			if (genGame.getBluePoints() > genGame.getRedPoints()) {
+				System.out.println("Blue Wins");
+			} else if (genGame.getBluePoints() < genGame.getRedPoints()) {
+				System.out.println("Red Wins");
+			} else if (genGame.getBluePoints() == genGame.getRedPoints()) {
+				System.out.println("Draw! No one wins");
+			}
 
 			in.close();
+			
 
 		}
 
