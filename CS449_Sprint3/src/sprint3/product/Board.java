@@ -109,7 +109,7 @@ public class Board {
 	
 	void updateGameState(boolean win) {
 		if (hasWon(win)) {
-			currentGameState = (turn == "Red") ? GameState.BLUE_WIN : GameState.RED_WIN;
+			currentGameState = (turn == "Red") ? GameState.BLUE_WIN : GameState.RED_WIN; //flips game state
 		}
 		else if (isDraw()) {
 			currentGameState = GameState.DRAW;
