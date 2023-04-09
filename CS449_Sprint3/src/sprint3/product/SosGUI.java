@@ -219,7 +219,9 @@ public class SosGUI extends JFrame {
 									board.setGameState(GameState.RED_WIN);
 								} else if (genGame.getBluePoints() == genGame.getRedPoints()) {
 									board.setGameState(GameState.DRAW);
+
 								}
+
 							}
 						}
 						

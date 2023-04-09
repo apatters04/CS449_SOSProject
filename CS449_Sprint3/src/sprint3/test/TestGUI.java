@@ -27,7 +27,7 @@ class TestGUI {
 	public void testEmptyBoard() {
 		new SosGUI(new Board());
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -35,10 +35,10 @@ class TestGUI {
 	
 	@Test
 	public void testNonEmptyBoard() {
-
+		board.makeMove(1, 1, 'S');	
 		new SosGUI(new Board());
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

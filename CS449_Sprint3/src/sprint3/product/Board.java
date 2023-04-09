@@ -48,7 +48,6 @@ public class Board {
 				continue;
 			}
 			else {
-				mySize.close();
 				break;
 			}
 
