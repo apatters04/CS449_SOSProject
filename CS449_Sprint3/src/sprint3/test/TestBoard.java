@@ -21,6 +21,7 @@ public class TestBoard {
 	public void tearDown() throws Exception{
 	}
 	
+	//Test Board
 	@Test
 	public void testNewBoard() {
 		for (int row = 0; row < board.getgridSize(); row++) {
@@ -37,8 +38,8 @@ public class TestBoard {
 	
 	@Test
 	public void testNonEmptyBoard() {
-		board.makeMove(0, 0);
-		board.makeMove(1, 2);
+		board.makeMove(0, 0,'S');
+		board.makeMove(1, 2, 'O');
 		new Console(board).displayBoard();
 	}
 	

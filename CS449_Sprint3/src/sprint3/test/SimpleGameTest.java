@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sprint3.product.Board;
-import sprint3.product.Board.Cell;
+import sprint3.product.SimpleGame;
 
-class SimpleGameTest {
+public class SimpleGameTest {
 	private Board board;
-
+	private SimpleGame simpGame = new SimpleGame();
 
 	@Before
 	public void setUp() throws Exception {
@@ -22,34 +22,46 @@ class SimpleGameTest {
 	public void tearDown() throws Exception {
 	}
 	
+	//Test Wins
 	@Test
-	public void testBlueSTurnVacantCell() {
+	public void testBlueWin() {
 		board.makeMove(0, 0, 'S');
-		assertEquals("", board.getCell(0, 0), Cell.BLUE);
-		assertEquals("", board.getTurn(), "Red");
-	}	
-	
-	@Test
-	public void testBlueOTurnVacantCell() {
-		board.makeMove(0, 0, 'O');
-		assertEquals("", board.getCell(0, 0), Cell.BLUE);
-		assertEquals("", board.getTurn(), "Red");
+		board.updateGameState(simpGame.hasSOS(board, board.getgridSize()));
+		board.makeMove(1, 1, 'O');
+		board.updateGameState(simpGame.hasSOS(board, board.getgridSize()));
+		board.makeMove(2, 2, 'S');
+		assertEquals(true, simpGame.hasSOS(board, board.getgridSize()));
 	}
 	
 	@Test
-	public void testRedSTurnVacantCell() {
+	public void testRedWin() {
+		board.makeMove(0, 1, 'O');
 		board.makeMove(0, 0, 'S');
+		board.updateGameState(simpGame.hasSOS(board, board.getgridSize()));
+		board.makeMove(1, 1, 'O');
+		board.updateGameState(simpGame.hasSOS(board, board.getgridSize()));
+		board.makeMove(2, 2, 'S');
+		assertEquals(true, simpGame.hasSOS(board, board.getgridSize()));
+	}
+	
+	//Test Draw
+	@Test
+	public void testDraw() {
+		board.makeMove(0, 0, 'S');
+		board.makeMove(0, 1, 'S');
+		board.makeMove(0, 2, 'S');
 		board.makeMove(1, 0, 'S');
-		assertEquals("", board.getCell(0, 0), Cell.RED);
-		assertEquals("", board.getTurn(), "Blue");
-	}	
-	
-	@Test
-	public void testRedOTurnVacantCell() {
-		board.makeMove(0, 0, 'S');
-		board.makeMove(1, 0, 'O');
-		assertEquals("", board.getCell(0, 0), Cell.RED);
-		assertEquals("", board.getTurn(), "Blue");
+		board.makeMove(1, 1, 'S');
+		board.makeMove(1, 2, 'S');
+		board.makeMove(2, 0, 'S');
+		board.makeMove(2, 1, 'S');
+		board.makeMove(2, 2, 'S');
+		
+		board.updateGameState(simpGame.hasSOS(board, board.getgridSize()));
+
+		assertEquals(false, simpGame.hasSOS(board, board.getgridSize()));
+		
 	}
+	
 
 }

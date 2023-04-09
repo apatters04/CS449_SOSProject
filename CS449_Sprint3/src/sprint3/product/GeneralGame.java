@@ -1,6 +1,6 @@
 package sprint3.product;
 
-import sprint3.product.Board.Cell;
+import sprint3.product.Board;
 
 public class GeneralGame extends SimpleGame {
 	

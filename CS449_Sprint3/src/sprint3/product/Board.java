@@ -10,7 +10,6 @@ public class Board {
 	private Cell[][] grid;
 	private int gridSize = 0;
 	private String turn;
-	private char play;
 	private int gameMode; // 0 - simple : 1 - general
 	
 	private GameState currentGameState;
@@ -49,8 +48,10 @@ public class Board {
 				continue;
 			}
 			else {
+				mySize.close();
 				break;
 			}
+
 		}
 	}
 
@@ -63,6 +64,8 @@ public class Board {
 		System.out.println("0) Simple or 1) General: ");
 		int  mode = myMode.nextInt();
 		this.gameMode = mode;
+		
+		myMode.close();
 	}
 	
 	public int getGameMode() {
@@ -104,13 +107,11 @@ public class Board {
 			}else if (playType == 'O') {
 				grid[row][col] = Cell.OH;
 			}
-			//grid[row][col] = (turn == "Blue") ? Cell.BLUE : Cell.RED;
-			//updateGameState();
 			turn = (turn == "Blue") ? "Red" : "Blue";
 		}
 	}
 	
-	void updateGameState(boolean win) {
+	public void updateGameState(boolean win) {
 		if (hasWon(win)) {
 			currentGameState = (turn == "Red") ? GameState.BLUE_WIN : GameState.RED_WIN; //flips game state
 		}

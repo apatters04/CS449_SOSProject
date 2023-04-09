@@ -4,7 +4,6 @@ import sprint3.product.Board.Cell;
 
 public class SimpleGame {
 	
-	private Board board;
 	
 	public void startGame() {
 		System.out.println("Welcome to an SOS Game");
