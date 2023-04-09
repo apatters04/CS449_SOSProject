@@ -64,8 +64,6 @@ public class Board {
 		System.out.println("0) Simple or 1) General: ");
 		int  mode = myMode.nextInt();
 		this.gameMode = mode;
-		
-		myMode.close();
 	}
 	
 	public int getGameMode() {
@@ -149,6 +147,10 @@ public class Board {
 		boolean hasWin = win;
 		
 		return hasWin;
+	}
+	
+	public void setGameState(GameState state) {
+		currentGameState = state;
 	}
 	
 	public GameState getGameState() {

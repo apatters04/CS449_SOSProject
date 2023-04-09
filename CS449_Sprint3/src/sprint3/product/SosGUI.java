@@ -34,14 +34,17 @@ public class SosGUI extends JFrame {
 
 	private GameBoardCanvas gameBoardCanvas; 
 	private JLabel gameStatusBar; 
+	private JLabel bluePoints; 
+	private JLabel redPoints; 
 	private Container contentPane;
 
 	private Board board;
+	private SimpleGame simpGame = new SimpleGame();
+	private GeneralGame genGame = new GeneralGame();
 	
 	final static String S = "S";
 	final static String O = "O";
-	
-	
+
 	JLabel sizeLabel;
 	JTextField sizeField;
 	JButton startGame;
@@ -56,6 +59,7 @@ public class SosGUI extends JFrame {
 	
 	public SosGUI(Board board) {
 		this.board = board;
+		board.resetGame();
 		setContentPane();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack(); 
@@ -144,11 +148,20 @@ public class SosGUI extends JFrame {
 		
 		
 		//adding gameboard
-		gameBoardCanvas = new GameBoardCanvas();  
+		gameBoardCanvas = new GameBoardCanvas(); 
 
 		gameBoardCanvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
+		
+		JPanel pointPane = new JPanel();
 	
 		gameStatusBar = new JLabel("    ");
+		bluePoints = new JLabel("Blue Points: " + genGame.getBluePoints());
+		redPoints = new JLabel("Red Points: " + genGame.getRedPoints());
+		
+		pointPane.add(gameStatusBar);
+		pointPane.add(bluePoints);
+		pointPane.add(redPoints);
+		
 
 		gameStatusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 15));
 		gameStatusBar.setBorder(BorderFactory.createEmptyBorder(2, 5, 4, 5));
@@ -159,13 +172,10 @@ public class SosGUI extends JFrame {
 		contentPane.add(modePane, BorderLayout.PAGE_START);
 		contentPane.add(bluePlayerPane, BorderLayout.LINE_START);
 		contentPane.add(redPlayerPane, BorderLayout.LINE_END);
-		
 		contentPane.add(gameBoardCanvas, BorderLayout.CENTER);
-		contentPane.add(gameStatusBar, BorderLayout.PAGE_END); 	
+		contentPane.add(pointPane, BorderLayout.PAGE_END); 	
 
 	}
-	
-
 
 
 	class GameBoardCanvas extends JPanel{
@@ -176,8 +186,42 @@ public class SosGUI extends JFrame {
 					if (board.getGameState() == GameState.PLAYING) {
 						int rowSelected = e.getY() / CELL_SIZE;
 						int colSelected = e.getX() / CELL_SIZE;
-
-						board.makeMove(rowSelected, colSelected);
+						
+						if (board.getTurn() == "Blue") {
+							if (sBlueMove.isSelected()) {
+								board.makeMove(rowSelected, colSelected, 'S');
+							} else if (oBlueMove.isSelected()) {
+								board.makeMove(rowSelected, colSelected, 'O');
+							}
+						} else if (board.getTurn() == "Red") {
+							if (sRedMove.isSelected()) {
+								board.makeMove(rowSelected, colSelected, 'S');
+							} else if (oRedMove.isSelected()) {
+								board.makeMove(rowSelected, colSelected, 'O');
+							}
+						}
+						if (board.getGameMode() == 0) {
+							board.updateGameState(simpGame.hasSOS(board, board.getgridSize()));
+						}
+						else if (board.getGameMode() == 1) {
+							if (genGame.hasSOS(board, board.getgridSize())) {
+								if (board.getTurn() == "Red") {
+									genGame.addBluePoints(1);
+								}else if (board.getTurn() == "Blue") {
+									genGame.addRedPoints(1);
+								}
+							}
+							board.updateGameState(board.boardFull());
+							if (board.boardFull()) {
+								if (genGame.getBluePoints() > genGame.getRedPoints()) {
+									board.setGameState(GameState.BLUE_WIN);
+								} else if (genGame.getBluePoints() < genGame.getRedPoints()) {
+									board.setGameState(GameState.RED_WIN);
+								} else if (genGame.getBluePoints() == genGame.getRedPoints()) {
+									board.setGameState(GameState.DRAW);
+								}
+							}
+						}
 						
 					} 
 					else {
@@ -195,6 +239,7 @@ public class SosGUI extends JFrame {
 			drawGridLines(g);
 			drawBoard(g);
 			printStatusBar();
+			drawLine(g);
 		}
 		
 		private void drawGridLines(Graphics g){
@@ -220,33 +265,28 @@ public class SosGUI extends JFrame {
 					int x1 = colSelected * CELL_SIZE + CELL_PADDING;
 					int y1 = rowSelected * CELL_SIZE + CELL_PADDING;
 					
-					if (board.getCell(rowSelected,colSelected) == Cell.BLUE) {
-						if (sBlueMove.isSelected() == true) {
-							g2d.setColor(Color.BLUE);
-							int y2 = (rowSelected + 1) * CELL_SIZE - CELL_PADDING;
-							g2d.setFont(myFont);
-							g2d.drawString("S", x1, y2);
-							
-						}else if (oBlueMove.isSelected() == true) {
-							g2d.setColor(Color.BLUE);
-							g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
-
-						}
+					if ((board.getCell(rowSelected,colSelected) == Cell.ESS)) {
+						g2d.setColor(Color.BLACK);
+						int y2 = (rowSelected + 1) * CELL_SIZE - CELL_PADDING;
+						g2d.setFont(myFont);
+						g2d.drawString("S", x1, y2);
 						
-					} else if (board.getCell(rowSelected,colSelected) == Cell.RED) {
-						if (sRedMove.isSelected() == true) {
-
-							g2d.setColor(Color.RED);
-							int y2 = (rowSelected + 1) * CELL_SIZE - CELL_PADDING;
-							g2d.setFont(myFont);
-							g2d.drawString("S", x1, y2);
-						}else if (oRedMove.isSelected() == true) {
-
-							g2d.setColor(Color.RED);
-							g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
-
-						}
 					}
+							
+					else if ((board.getCell(rowSelected,colSelected) == Cell.OH) || (board.getCell(rowSelected,colSelected) == Cell.USED)) {
+						g2d.setColor(Color.BLACK);
+						g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
+					}
+
+				}
+			}
+		}
+		
+		private void drawLine(Graphics g) {
+			Graphics2D g2d = (Graphics2D)g;
+			if (board.getGameMode() == 0) {
+				if (simpGame.hasSOS(board, board.getgridSize())) {
+					g2d.drawLine(0, 100, 100, 100);
 				}
 			}
 		}
@@ -254,10 +294,21 @@ public class SosGUI extends JFrame {
 		private void printStatusBar(){
 			if (board.getGameState() == GameState.PLAYING) {
 				gameStatusBar.setForeground(Color.BLACK);
-				if (board.getTurn() == "Blue") {
-					gameStatusBar.setText("Blue's Turn");
-				} else {
-					gameStatusBar.setText("Red's Turn");
+				if (board.getGameMode() == 0) {
+					if (board.getTurn() == "Blue") {
+						gameStatusBar.setText("Blue's Turn");
+					} else {
+						gameStatusBar.setText("Red's Turn");
+					}
+				}
+				else if (board.getGameMode() == 1) {
+					if (board.getTurn() == "Blue") {
+						gameStatusBar.setText("Blue's Turn");
+					} else {
+						gameStatusBar.setText("Red's Turn");
+					}
+					bluePoints = new JLabel("Blue Points: " + genGame.getBluePoints());
+					redPoints = new JLabel("Red Points: " + genGame.getRedPoints());
 				}
 			} else if (board.getGameState() == GameState.DRAW) {
 				gameStatusBar.setForeground(Color.RED);

@@ -33,25 +33,7 @@ public class Console {
 		
 	}
 	
-	/*private String turn(Cell cell) {
-		if (cell==Cell.BLUE)
-			return "BLUE";
-		else
-			if (cell==Cell.RED)
-				return "RED";
-			else return " ";
-	}
-	
-	private char symbol(PlayType play) {
-		if (play==PlayType.ESS)
-			return 'S';
-		else
-			if (play==PlayType.OH)
-				return 'O';
-			else return ' ';
-	}*/
-	
-	private boolean isOver() {
+	public boolean isOver() {
 		GameState state = board.getGameState();
 		if (state == GameState.PLAYING) {
 			return false;
