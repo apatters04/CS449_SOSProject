@@ -159,8 +159,8 @@ public class SosGUI extends JFrame {
 		redPoints = new JLabel("Red Points: " + genGame.getRedPoints());
 		
 		pointPane.add(gameStatusBar);
-		pointPane.add(bluePoints);
-		pointPane.add(redPoints);
+		//pointPane.add(bluePoints);
+		//pointPane.add(redPoints);
 		
 
 		gameStatusBar.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 15));
@@ -311,10 +311,10 @@ public class SosGUI extends JFrame {
 					redPoints = new JLabel("Red Points: " + genGame.getRedPoints());
 				}
 			} else if (board.getGameState() == GameState.DRAW) {
-				gameStatusBar.setForeground(Color.RED);
+				gameStatusBar.setForeground(Color.MAGENTA);
 				gameStatusBar.setText("It's a Draw! Click to play again.");
 			} else if (board.getGameState() == GameState.BLUE_WIN) {
-				gameStatusBar.setForeground(Color.RED);
+				gameStatusBar.setForeground(Color.BLUE);
 				gameStatusBar.setText("Blue Won! Click to play again.");
 			} else if (board.getGameState()== GameState.RED_WIN) {
 				gameStatusBar.setForeground(Color.RED);
