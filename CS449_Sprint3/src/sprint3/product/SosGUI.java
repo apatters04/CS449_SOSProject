@@ -41,6 +41,7 @@ public class SosGUI extends JFrame {
 	final static String S = "S";
 	final static String O = "O";
 	
+	
 	JLabel sizeLabel;
 	JTextField sizeField;
 	JButton startGame;
@@ -53,9 +54,6 @@ public class SosGUI extends JFrame {
 	private JRadioButton sRedMove;
 	private JRadioButton oRedMove;
 	
-	private int playerMove;
-
-
 	public SosGUI(Board board) {
 		this.board = board;
 		setContentPane();
@@ -178,6 +176,7 @@ public class SosGUI extends JFrame {
 					if (board.getGameState() == GameState.PLAYING) {
 						int rowSelected = e.getY() / CELL_SIZE;
 						int colSelected = e.getX() / CELL_SIZE;
+
 						board.makeMove(rowSelected, colSelected);
 						
 					} 
