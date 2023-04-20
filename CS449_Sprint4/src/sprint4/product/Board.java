@@ -11,11 +11,15 @@ public class Board {
 	private int gridSize = 0;
 	private String turn;
 	private int gameMode; // 0 - simple : 1 - general
+	private int bluePlayer;
+	private int redPlayer;
 	
 	private GameState currentGameState;
 	
 	public Board() {
 		setGameMode();
+		setBlueAIPlayer();
+		setRedAIPlayer();
 		setgridSize();
 		
 		grid = new Cell[gridSize][gridSize];
@@ -64,9 +68,36 @@ public class Board {
 		int  mode = myMode.nextInt();
 		this.gameMode = mode;
 	}
+
 	
 	public int getGameMode() {
 		return gameMode;
+	}
+	
+	public void setBlueAIPlayer() {
+		Scanner blueAI = new Scanner(System.in);
+		System.out.println("Blue Turn: AI or Human Player");
+		System.out.println("0) AI Player or 1) Human Player: ");
+		int  isAI = blueAI.nextInt();
+		this.bluePlayer = isAI;
+
+	}
+	
+	public int getBlueAIPlayer() {
+		return bluePlayer;
+	}
+	
+	public void setRedAIPlayer() {
+		Scanner redAI = new Scanner(System.in);
+		System.out.println("Red Turn: AI or Human Player");
+		System.out.println("0) AI Player or 1) Human Player: ");
+		int  isAI = redAI.nextInt();
+		this.redPlayer = isAI;
+		
+	}
+	
+	public int getRedAIPlayer() {
+		return redPlayer;
 	}
 	
 	public void initBoard() {

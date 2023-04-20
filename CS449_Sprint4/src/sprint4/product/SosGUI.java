@@ -46,7 +46,6 @@ public class SosGUI extends JFrame {
 	final static String O = "O";
 
 	JLabel sizeLabel;
-	JTextField sizeField;
 	JButton startGame;
 	JRadioButton simpleModeButton = new JRadioButton("Simple");
 	JRadioButton generalModeButton = new JRadioButton("General");
@@ -83,18 +82,21 @@ public class SosGUI extends JFrame {
 		modeGroup.add(simpleModeButton);
 		modeGroup.add(generalModeButton);
 		simpleModeButton.setPreferredSize(new Dimension(100,25));
-		simpleModeButton.setSelected(true);
 		generalModeButton.setPreferredSize(new Dimension(100,25));
+		
+		if (board.getGameMode() == 0) {
+			simpleModeButton.setSelected(true);
+		} else if (board.getGameMode() == 1) {
+			generalModeButton.setSelected(true);
+		}
 		
 		modePane.add(simpleModeButton, BorderLayout.LINE_START);
 		modePane.add(generalModeButton, BorderLayout.LINE_END);
 		
 		//textfield for grid size
 		sizeLabel = new JLabel("Enter GridSize");
-		sizeField = new JTextField(2);
 		startGame = new JButton("Start");
 		modePane.add(sizeLabel);
-		modePane.add(sizeField);
 		modePane.add(startGame);
 	
 		modePane.setPreferredSize(new Dimension(CANVAS_WIDTH, 75));
