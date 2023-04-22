@@ -7,14 +7,14 @@ public class Board {
 	public enum Cell {EMPTY, BLUE, RED, ESS, OH, USED}
 	public enum GameState {PLAYING, DRAW, BLUE_WIN, RED_WIN, END}
 	
-	private Cell[][] grid;
+	protected Cell[][] grid;
 	private int gridSize = 0;
-	private String turn;
+	protected String turn;
 	private int gameMode; // 0 - simple : 1 - general
 	private int bluePlayer;
 	private int redPlayer;
 	
-	private GameState currentGameState;
+	protected GameState currentGameState;
 	
 	public Board() {
 		setGameMode();

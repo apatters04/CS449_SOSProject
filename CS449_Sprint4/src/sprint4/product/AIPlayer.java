@@ -10,7 +10,7 @@ public class AIPlayer {
 	
 	private Random rand = new Random();
 	
-	public boolean findSOS(Board board, int size) {
+	public boolean findSOS(Board board) {
 
 		for (int row = 0; row < board.getgridSize(); row++) {
 			for (int col = 0; col < board.getgridSize(); col++) {

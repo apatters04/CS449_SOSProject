@@ -47,6 +47,9 @@ public class SosGUI extends JFrame {
 
 	JLabel sizeLabel;
 	JButton startGame;
+
+	JLabel bluePlayLabel = new JLabel(" ");
+	JLabel redPlayLabel = new JLabel(" ");
 	JRadioButton simpleModeButton = new JRadioButton("Simple");
 	JRadioButton generalModeButton = new JRadioButton("General");
 	
@@ -132,7 +135,11 @@ public class SosGUI extends JFrame {
 		sRedMove.setSelected(true);
 		//add Blue Player Information
 		JPanel bluePlayerPane = new JPanel(new GridLayout(5,5));
-		JLabel bluePlayLabel = new JLabel("Blue Player");
+		if (board.getBlueAIPlayer() == 0) {
+			bluePlayLabel = new JLabel("Blue Computer Player");
+		} else if (board.getBlueAIPlayer() == 1) {
+			bluePlayLabel = new JLabel("Blue Human Player");
+		}
 		
 
 		
@@ -143,6 +150,11 @@ public class SosGUI extends JFrame {
 		//add Red Player Information
 		JPanel redPlayerPane = new JPanel(new GridLayout(5,5));
 		JLabel redPlayLabel = new JLabel("Red Player");
+		if (board.getRedAIPlayer() == 0) {
+			redPlayLabel = new JLabel("Red Computer Player");
+		} else if (board.getRedAIPlayer() == 1) {
+			redPlayLabel = new JLabel("Red Human Player");
+		}
 		
 		redPlayerPane.add(redPlayLabel);
 		redPlayerPane.add(sRedMove);

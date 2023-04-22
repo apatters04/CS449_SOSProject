@@ -71,7 +71,7 @@ public class Console {
 				System.out.println("Current player: " + board.getTurn());
 
 				if (board.getTurn() == "Blue") {
-					if (AIPlay.findSOS(board, board.getgridSize()) == true) {
+					if (AIPlay.findSOS(board) == true) {
 						board.makeMove(AIPlay.getPlayRow(), AIPlay.getPlayCol(), AIPlay.getPlay());
 					}
 					else {
@@ -80,7 +80,7 @@ public class Console {
 					}
 				}
 				else if (board.getTurn() == "Red") {
-					if (AIPlay.findSOS(board, board.getgridSize()) == true) {
+					if (AIPlay.findSOS(board) == true) {
 						board.makeMove(AIPlay.getPlayRow(), AIPlay.getPlayCol(), AIPlay.getPlay());
 					}
 					else {
@@ -124,7 +124,7 @@ public class Console {
 					
 				}
 				else if (board.getTurn() == "Red") {
-					if (AIPlay.findSOS(board, board.getgridSize()) == true) {
+					if (AIPlay.findSOS(board) == true) {
 						board.makeMove(AIPlay.getPlayRow(), AIPlay.getPlayCol(), AIPlay.getPlay());
 					}
 					else {
@@ -155,7 +155,7 @@ public class Console {
 				System.out.println("Current player: " + board.getTurn());
 
 				if (board.getTurn() == "Blue") {
-					if (AIPlay.findSOS(board, board.getgridSize()) == true) {
+					if (AIPlay.findSOS(board) == true) {
 						board.makeMove(AIPlay.getPlayRow(), AIPlay.getPlayCol(), AIPlay.getPlay());
 					}
 					else {
@@ -234,7 +234,7 @@ public class Console {
 			while (!done) {
 				System.out.println("Current player: " + board.getTurn());
 				if (board.getTurn() == "Blue") {
-					if (AIPlay.findSOS(board, board.getgridSize()) == true) {
+					if (AIPlay.findSOS(board) == true) {
 						board.makeMove(AIPlay.getPlayRow(), AIPlay.getPlayCol(), AIPlay.getPlay());
 						if (genGame.hasSOS(board, board.getgridSize())) {
 							if (board.getTurn() == "Red") {
@@ -249,7 +249,7 @@ public class Console {
 					
 				}
 				else if (board.getTurn() == "Red") {
-					if (AIPlay.findSOS(board, board.getgridSize()) == true) {
+					if (AIPlay.findSOS(board) == true) {
 						board.makeMove(AIPlay.getPlayRow(), AIPlay.getPlayCol(), AIPlay.getPlay());
 						if (genGame.hasSOS(board, board.getgridSize())) {
 							if (board.getTurn() == "Blue") {
@@ -277,7 +277,10 @@ public class Console {
 			} else if (genGame.getBluePoints() == genGame.getRedPoints()) {
 				System.out.println("Draw! No one wins");
 			}
+			in.close();
 		}
+		
+		
 		else if (blueAI == 1 && redAI == 0) { //blue human, red computer
 			board.resetGame();
 			Scanner in = new Scanner(System.in);
@@ -312,7 +315,7 @@ public class Console {
 					
 				}
 				else if (board.getTurn() == "Red") {
-					if (AIPlay.findSOS(board, board.getgridSize()) == true) {
+					if (AIPlay.findSOS(board) == true) {
 						board.makeMove(AIPlay.getPlayRow(), AIPlay.getPlayCol(), AIPlay.getPlay());
 						if (genGame.hasSOS(board, board.getgridSize())) {
 							if (board.getTurn() == "Blue") {
@@ -357,7 +360,7 @@ public class Console {
 				char play;
 				System.out.println("Current player: " + board.getTurn());
 				if (board.getTurn() == "Blue") {
-					if (AIPlay.findSOS(board, board.getgridSize()) == true) {
+					if (AIPlay.findSOS(board) == true) {
 						board.makeMove(AIPlay.getPlayRow(), AIPlay.getPlayCol(), AIPlay.getPlay());
 						if (genGame.hasSOS(board, board.getgridSize())) {
 							if (board.getTurn() == "Red") {
@@ -475,7 +478,7 @@ public class Console {
 			}
 		}
 		
-		else if (board.getGameMode() == 0) {
+		else if (board.getGameMode() == 1) {
 			if ((board.getBlueAIPlayer() == 0) && (board.getRedAIPlayer() == 0)) { //two computers
 				playGeneralGame(0,0);
 			} else if ((board.getBlueAIPlayer() == 1) && (board.getRedAIPlayer() == 0)) { //blue human, red AI
