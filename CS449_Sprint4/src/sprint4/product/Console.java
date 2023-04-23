@@ -466,6 +466,8 @@ public class Console {
 	}
 	
 	public void play() {
+
+		board.resetGame();
 		if (board.getGameMode() == 0) {
 			if ((board.getBlueAIPlayer() == 0) && (board.getRedAIPlayer() == 0)) { //two computers
 				playSimpleGame(0,0);
