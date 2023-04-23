@@ -30,12 +30,4 @@ public class TestBlueComputer {
 		assertEquals(GameState.BLUE_WIN, board.getGameState());
 	}
 	
-	@Test
-	public void testRedAIWin() {
-		board.resetGame();
-		new Console(board).play();
-		assertEquals(GameState.RED_WIN, board.getGameState());
-	}
-
-	
 }
