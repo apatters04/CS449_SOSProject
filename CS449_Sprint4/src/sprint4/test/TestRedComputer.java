@@ -30,6 +30,5 @@ public class TestRedComputer {
 		new Console(board).play();
 		assertEquals(GameState.RED_WIN, board.getGameState());
 	}
-
 	
 }
