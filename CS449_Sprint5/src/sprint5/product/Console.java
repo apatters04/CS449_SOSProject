@@ -307,9 +307,8 @@ public class Console {
 					done = isOver();
 				}
 
-				
+				recordGame();
 			}
-			recordGame();
 	
 			in.close();
 		}
